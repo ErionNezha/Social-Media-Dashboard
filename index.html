@@ -1,0 +1,306 @@
+<!-- Created by Erion Nezha — © 2026 All rights reserved -->
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paneli Social — Erion Nezha</title>
+<meta name="description" content="Ndiq rritjen tënde në rrjete sociale — statistika, grafikë dhe dark/light mode.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style id="appcss">
+/* ============ ERION NEZHA · ULTRA-PREMIUM THEME (shared) ============ */
+:root{
+  --bg0:#070b16; --bg1:#0b1124; --gold:#D4AF37; --gold2:#f3dd8f;
+  --ink:#eef1f7; --mut:#9aa3b8; --glass:rgba(255,255,255,.055);
+  --line:rgba(212,175,55,.22); --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  background:var(--bg0); color:var(--ink); min-height:100vh; overflow-x:hidden;
+}
+.bg-orbs{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.bg-orbs span{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;animation:drift 14s ease-in-out infinite alternate}
+.bg-orbs span:nth-child(1){width:520px;height:520px;left:-140px;top:-120px;background:radial-gradient(circle,#D4AF37,transparent 65%)}
+.bg-orbs span:nth-child(2){width:620px;height:620px;right:-180px;top:30%;background:radial-gradient(circle,#2b3f8f,transparent 65%);animation-delay:-5s}
+.bg-orbs span:nth-child(3){width:460px;height:460px;left:20%;bottom:-160px;background:radial-gradient(circle,#6b4fa1,transparent 65%);animation-delay:-9s}
+@keyframes drift{to{transform:translate(60px,40px) scale(1.12)}}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+.site-header{padding:64px 0 30px;text-align:center}
+.overline{letter-spacing:.42em;font-size:11px;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.site-header h1{font-size:clamp(30px,5vw,52px);font-weight:800;line-height:1.15;
+  background:linear-gradient(120deg,#fff 20%,var(--gold2) 55%,var(--gold) 80%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.site-header p{color:var(--mut);max-width:640px;margin:14px auto 0;font-size:16px;line-height:1.65}
+.live-badge{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:8px 18px;border-radius:999px;
+  border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(10px);font-size:13px;color:var(--gold2);letter-spacing:.08em}
+.live-badge i{width:9px;height:9px;border-radius:50%;background:#3ddc84;box-shadow:0 0 12px #3ddc84;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.demo-wrap{margin:26px 0 54px}
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 24px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);padding:30px}
+.code-section{margin:0 0 60px}
+.code-section h2{font-size:24px;margin-bottom:6px}
+.code-section .sub{color:var(--mut);font-size:14px;margin-bottom:18px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:0;align-items:center}
+.ctab{padding:10px 22px;border-radius:12px 12px 0 0;border:1px solid var(--line);border-bottom:none;cursor:pointer;
+  background:rgba(255,255,255,.03);color:var(--mut);font-size:14px;font-weight:600;letter-spacing:.04em;transition:.25s}
+.ctab.active{background:linear-gradient(180deg,rgba(212,175,55,.22),rgba(212,175,55,.06));color:var(--gold2)}
+.ctab:hover{color:var(--ink)}
+#copyBtn{margin-left:auto;padding:9px 20px;border-radius:10px;border:1px solid var(--line);cursor:pointer;
+  background:linear-gradient(120deg,var(--gold),#a8842a);color:#0a0e1a;font-weight:700;font-size:13px;transition:.25s}
+#copyBtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(212,175,55,.35)}
+.codebox{border:1px solid var(--line);border-radius:0 14px 14px 14px;overflow:hidden;background:#0d1326}
+.codebox pre{margin:0;max-height:560px;overflow:auto}
+.codebox pre code{display:block;padding:22px;font-family:"Cascadia Code","Fira Code",Consolas,monospace;font-size:13.5px;line-height:1.7;background:transparent}
+.codebox pre::-webkit-scrollbar{width:10px;height:10px}
+.codebox pre::-webkit-scrollbar-thumb{background:rgba(212,175,55,.35);border-radius:8px}
+footer{text-align:center;padding:34px 20px 44px;color:var(--mut);font-size:14px;border-top:1px solid rgba(212,175,55,.14)}
+footer strong{color:var(--gold2)}
+/* ============ APP CSS (per projekt) ============ */
+
+/* ===== PANELI SOCIAL APP ===== */
+.sm-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:20px}
+.sm-plats,.sm-per{display:flex;gap:8px;flex-wrap:wrap}
+.sm-pbtn{padding:10px 18px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer;font-weight:700;font-size:14px;transition:.2s}
+.sm-pbtn.active{background:linear-gradient(120deg,var(--gold),#a8842a);color:#0a0e1a;border-color:transparent}
+.sm-pbtn:hover{color:var(--ink)}
+.sm-pbtn.active:hover{color:#0a0e1a}
+.sm-theme{padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:var(--glass);color:var(--gold2);cursor:pointer;font-size:17px;transition:.2s}
+.sm-theme:hover{transform:translateY(-2px)}
+.sm-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.sm-card{padding:20px;border-radius:16px;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(10px);transition:.25s;animation:smIn .4s ease}
+.sm-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,.4)}
+@keyframes smIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.sm-card .ic{font-size:28px;margin-bottom:10px}
+.sm-card .lbl{font-size:13px;color:var(--mut);margin-bottom:6px}
+.sm-card .val{font-size:30px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.sm-card .delta{font-size:13px;font-weight:700;margin-top:6px}
+.delta.up{color:#3ddc84}.delta.down{color:#ff6b6b}
+.sm-charts{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
+.sm-chart{padding:20px;border-radius:16px;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(10px)}
+.sm-chart h3{font-size:15px;margin-bottom:4px;color:var(--gold2)}
+.sm-chart .cap{font-size:12.5px;color:var(--mut);margin-bottom:12px}
+canvas.sm-cv{width:100%;height:240px;display:block}
+.sm-note{font-size:12.5px;color:var(--mut);text-align:center;margin-top:16px}
+.sm-note b{color:var(--gold2)}
+/* light mode */
+html[data-theme="light"]{--bg0:#f5f2ea;--bg1:#ece5d4;--ink:#1b2233;--mut:#5c6478;--glass:rgba(255,255,255,.62);--line:rgba(176,138,32,.45)}
+html[data-theme="light"] .bg-orbs{opacity:.3}
+html[data-theme="light"] .sm-card,html[data-theme="light"] .sm-chart{box-shadow:0 12px 30px rgba(120,90,20,.12)}
+@media(max-width:900px){.sm-cards{grid-template-columns:repeat(2,1fr)}.sm-charts{grid-template-columns:1fr}}
+
+@media(max-width:640px){.glass{padding:20px}.site-header{padding:44px 0 22px}}
+</style>
+</head>
+<body>
+<div class="bg-orbs"><span></span><span></span><span></span></div>
+
+<header class="site-header wrap">
+  <div class="overline">Erion Nezha · Web Projects</div>
+  <h1>Paneli Social</h1>
+  <p>Ndiq rritjen tënde në rrjete sociale — statistika, grafikë dhe dark/light mode.</p>
+  <div class="live-badge"><i></i> LIVE DEMO</div>
+</header>
+
+<main class="wrap">
+  <section class="demo-wrap">
+    <div class="glass" id="demo">
+
+<div class="sm-bar">
+  <div class="sm-plats">
+    <button class="sm-pbtn active" data-p="instagram">📸 Instagram</button>
+    <button class="sm-pbtn" data-p="tiktok">🎵 TikTok</button>
+    <button class="sm-pbtn" data-p="youtube">▶️ YouTube</button>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <div class="sm-per">
+      <button class="sm-pbtn active" data-d="7">7D</button>
+      <button class="sm-pbtn" data-d="30">30D</button>
+    </div>
+    <button class="sm-theme" id="smTheme" title="Ndërro temën">🌙</button>
+  </div>
+</div>
+<div class="sm-cards" id="smCards"></div>
+<div class="sm-charts">
+  <div class="sm-chart"><h3>📈 Rritja e ndjekësve</h3><div class="cap" id="smLineCap"></div><canvas class="sm-cv" id="smLine"></canvas></div>
+  <div class="sm-chart"><h3>📊 Angazhimi javor</h3><div class="cap">7 ditët e fundit · pëlqime/ditë</div><canvas class="sm-cv" id="smBars"></canvas></div>
+</div>
+<div class="sm-note">ℹ️ <b>Të dhëna të simuluara</b> për demonstrim — jo statistika reale.</div>
+
+    </div>
+  </section>
+
+  <section class="code-section">
+    <h2>💻 Kodi Burim</h2>
+    <p class="sub">I gjithë kodi i këtij projekti — i lexueshëm, i kopjueshëm, gati për t'u mësuar.</p>
+    <div class="tabs">
+      <button class="ctab active" data-tab="html">HTML</button>
+      <button class="ctab" data-tab="css">CSS</button>
+      <button class="ctab" data-tab="js">JavaScript</button>
+      <button id="copyBtn">Kopjo kodin</button>
+    </div>
+    <div class="codebox"><pre><code id="codeView" class="language-html"></code></pre></div>
+  </section>
+</main>
+
+<footer>Krijuar nga <strong>Erion Nezha</strong> · © 2026 — Të gjitha të drejtat e rezervuara</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script id="appjs">
+
+(function(){
+var PLAT={
+ instagram:{n:'Instagram',f:48210,fd:4.2,l:128400,ld:6.8,v:892300,vd:-1.3,c:9412,cd:2.9,seed:7},
+ tiktok:{n:'TikTok',f:120500,fd:11.6,l:890200,ld:14.2,v:3400000,vd:9.4,c:32100,cd:12.1,seed:21},
+ youtube:{n:'YouTube',f:23400,fd:2.1,l:45200,ld:3.3,v:1250000,vd:5.7,c:5100,cd:-0.8,seed:42}
+};
+var plat='instagram',days=30;
+function rng(seed){var a=seed;return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function fmt(n){if(n>=1000000)return (n/1000000).toFixed(1)+'M';if(n>=1000)return (n/1000).toFixed(1)+'K';return ''+Math.round(n);}
+function card(icon,lbl,val,delta){
+ var up=delta>=0;
+ return '<div class="sm-card"><div class="ic">'+icon+'</div><div class="lbl">'+lbl+'</div>'
+  +'<div class="val" data-v="'+val+'">0</div>'
+  +'<div class="delta '+(up?'up':'down')+'">'+(up?'▲':'▼')+' '+Math.abs(delta).toFixed(1)+'% <span style="color:var(--mut);font-weight:400">vs periudha e kaluar</span></div></div>';
+}
+function countUp(){
+ var els=document.querySelectorAll('#smCards .val');
+ for(var i=0;i<els.length;i++){(function(el){
+  var target=parseFloat(el.getAttribute('data-v')),t0=null;
+  function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/900,1);el.textContent=fmt(target*p);if(p<1)requestAnimationFrame(step);}
+  requestAnimationFrame(step);
+ })(els[i]);}
+}
+function renderCards(){
+ var d=PLAT[plat];
+ document.getElementById('smCards').innerHTML=
+  card('👥','Ndjekës',d.f,d.fd)+card('❤️','Pëlqime',d.l,d.ld)
+  +card('👀','Shikime',d.v,d.vd)+card('💬','Komente',d.c,d.cd);
+ countUp();
+}
+function series(n,base,vol,seed){
+ var r=rng(seed),out=[],v=base*(1-vol);
+ for(var i=0;i<n;i++){v+=(r()-0.42)*base*vol*0.4+base*vol*0.02;out.push(Math.max(v,base*0.3));}
+ return out;
+}
+function setupCanvas(cv){
+ var dpr=window.devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;
+ cv.width=w*dpr;cv.height=h*dpr;
+ var ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
+ return {ctx:ctx,w:w,h:h};
+}
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+function drawLine(){
+ var cv=document.getElementById('smLine'),s=setupCanvas(cv),ctx=s.ctx,w=s.w,h=s.h;
+ var d=PLAT[plat],pts=series(days,d.f,0.25,d.seed);
+ var pad={l:46,r:12,t:14,b:26};
+ var min=Math.min.apply(null,pts),max=Math.max.apply(null,pts);
+ if(max-min<1)max=min+1;
+ function X(i){return pad.l+(w-pad.l-pad.r)*(i/(pts.length-1));}
+ function Y(v){return pad.t+(h-pad.t-pad.b)*(1-(v-min)/(max-min));}
+ var mut=cssVar('--mut')||'#9aa3b8';
+ ctx.strokeStyle='rgba(154,163,184,.18)';ctx.fillStyle=mut;ctx.font='11px sans-serif';ctx.lineWidth=1;
+ for(var g=0;g<=4;g++){
+  var gv=min+(max-min)*g/4,yy=Y(gv);
+  ctx.beginPath();ctx.moveTo(pad.l,yy);ctx.lineTo(w-pad.r,yy);ctx.stroke();
+  ctx.fillText(fmt(gv),6,yy+4);
+ }
+ var grad=ctx.createLinearGradient(0,pad.t,0,h-pad.b);
+ grad.addColorStop(0,'rgba(212,175,55,.45)');grad.addColorStop(1,'rgba(212,175,55,0)');
+ ctx.beginPath();ctx.moveTo(X(0),Y(pts[0]));
+ for(var i=1;i<pts.length;i++)ctx.lineTo(X(i),Y(pts[i]));
+ ctx.lineTo(X(pts.length-1),h-pad.b);ctx.lineTo(X(0),h-pad.b);ctx.closePath();
+ ctx.fillStyle=grad;ctx.fill();
+ ctx.beginPath();ctx.moveTo(X(0),Y(pts[0]));
+ for(var j=1;j<pts.length;j++)ctx.lineTo(X(j),Y(pts[j]));
+ ctx.strokeStyle='#D4AF37';ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.stroke();
+ var step=Math.max(1,Math.floor(pts.length/6));
+ ctx.fillStyle=mut;
+ for(var k=0;k<pts.length;k+=step)ctx.fillText('D'+(k+1),X(k)-8,h-8);
+ var lx=X(pts.length-1),ly=Y(pts[pts.length-1]);
+ ctx.beginPath();ctx.arc(lx,ly,5,0,7);ctx.fillStyle='#D4AF37';ctx.fill();
+ ctx.strokeStyle='#0b1124';ctx.lineWidth=2;ctx.stroke();
+}
+function drawBars(){
+ var cv=document.getElementById('smBars'),s=setupCanvas(cv),ctx=s.ctx,w=s.w,h=s.h;
+ var d=PLAT[plat],vals=series(7,d.l/30,0.5,d.seed+5);
+ var dayNames=['Hën','Mar','Mër','Enj','Pre','Sht','Die'];
+ var pad={l:10,r:10,t:14,b:26};
+ var max=Math.max.apply(null,vals),bw=(w-pad.l-pad.r)/7;
+ var mut=cssVar('--mut')||'#9aa3b8';
+ ctx.font='11px sans-serif';ctx.textAlign='center';
+ for(var i=0;i<7;i++){
+  var bh=(h-pad.t-pad.b)*(vals[i]/max);
+  var x=pad.l+i*bw+bw*0.18,y=h-pad.b-bh,ww=bw*0.64;
+  var g2=ctx.createLinearGradient(0,y,0,h-pad.b);
+  g2.addColorStop(0,'#f3dd8f');g2.addColorStop(1,'#a8842a');
+  ctx.fillStyle=g2;ctx.beginPath();
+  if(ctx.roundRect)ctx.roundRect(x,y,ww,Math.max(bh,2),[6,6,0,0]);else ctx.rect(x,y,ww,bh);
+  ctx.fill();
+  ctx.fillStyle=mut;ctx.fillText(dayNames[i],pad.l+i*bw+bw/2,h-8);
+ }
+ ctx.textAlign='left';
+}
+function drawAll(){drawLine();drawBars();}
+function render(){
+ renderCards();drawAll();
+ document.getElementById('smLineCap').textContent=days+' ditët e fundit · '+PLAT[plat].n;
+}
+var pbs=document.querySelectorAll('.sm-pbtn[data-p]');
+for(var i=0;i<pbs.length;i++){
+ pbs[i].addEventListener('click',function(){
+  plat=this.getAttribute('data-p');
+  for(var j=0;j<pbs.length;j++)pbs[j].classList.toggle('active',pbs[j]===this);
+  render();
+ });
+}
+var dbs=document.querySelectorAll('.sm-pbtn[data-d]');
+for(var k=0;k<dbs.length;k++){
+ dbs[k].addEventListener('click',function(){
+  days=parseInt(this.getAttribute('data-d'),10);
+  for(var j=0;j<dbs.length;j++)dbs[j].classList.toggle('active',dbs[j]===this);
+  render();
+ });
+}
+document.getElementById('smTheme').addEventListener('click',function(){
+ var html=document.documentElement,light=html.getAttribute('data-theme')==='light';
+ html.setAttribute('data-theme',light?'dark':'light');
+ this.textContent=light?'🌙':'☀️';
+ drawAll();
+});
+window.addEventListener('resize',function(){drawAll();});
+render();
+})();
+
+</script>
+<script>
+(function(){
+  var tabs={
+    html:{lang:"html",get:function(){return document.getElementById("demo").innerHTML.trim();}},
+    css:{lang:"css",get:function(){return document.getElementById("appcss").textContent.trim();}},
+    js:{lang:"javascript",get:function(){return document.getElementById("appjs").textContent.trim();}}
+  };
+  var view=document.getElementById("codeView"),cur="html";
+  function render(){
+    view.textContent=tabs[cur].get();
+    view.className="language-"+tabs[cur].lang;
+    if(window.hljs){delete view.dataset.highlighted;hljs.highlightElement(view);}
+    var bs=document.querySelectorAll(".ctab");
+    for(var i=0;i<bs.length;i++)bs[i].classList.toggle("active",bs[i].dataset.tab===cur);
+  }
+  var bs=document.querySelectorAll(".ctab");
+  for(var i=0;i<bs.length;i++)bs[i].addEventListener("click",function(){cur=this.dataset.tab;render();});
+  document.getElementById("copyBtn").addEventListener("click",function(){
+    var b=this,code=tabs[cur].get();
+    function done(t){b.textContent=t;setTimeout(function(){b.textContent="Kopjo kodin";},1600);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(code).then(function(){done("U kopjua ✓");},function(){done("Dështoi");});}
+    else{var ta=document.createElement("textarea");ta.value=code;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done("U kopjua ✓");}catch(e){done("Dështoi");}document.body.removeChild(ta);}
+  });
+  render();
+})();
+</script>
+</body>
+</html>
